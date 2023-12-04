@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class Interactable : MonoBehaviour
 {
-    protected string interactText;
+    public string interactText;
     protected Outline outline;
     
     public virtual void Start()
@@ -15,7 +15,6 @@ public abstract class Interactable : MonoBehaviour
     public virtual void OnLook()
     {
         outline.enabled = true;
-        GameManager.Instance.changeInteractionText(interactText);
     }
 
     public virtual void Interact()

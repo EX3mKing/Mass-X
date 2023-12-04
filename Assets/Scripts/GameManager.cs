@@ -61,9 +61,11 @@ public class GameManager : MonoBehaviour
 
     public void GetInteractable()
     {
-        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hit, reach))
+        if (Physics.Raycast(Camera.main.transform.position, 
+                Camera.main.transform.forward, out RaycastHit hit, reach)) // something hit
         {
-            
+            // not interactable
+            // remove info
             if (!(hit.collider.transform.parent.CompareTag("Interactable") || hit.collider.CompareTag("Interactable")))
             {
                 print("Obj isn't Interactable");
@@ -75,7 +77,9 @@ public class GameManager : MonoBehaviour
             
             Interactable interactable = hit.transform.parent.GetComponent<Interactable>();
             if (interactable == null) interactable = hit.transform.GetComponent<Interactable>();
-
+            
+            // not interactable
+            // remove info
             if (interactable == null)
             {
                 print("f+ed up somewhere w Interactable obj (Interactable missing)");
@@ -85,21 +89,27 @@ public class GameManager : MonoBehaviour
                 return;
             }
             
+            // new interactable
+            // add info
             if (currentInteractable == null)
             {
                 currentInteractable = interactable;
+                interactionText.text = currentInteractable.interactText;
                 currentInteractable.OnLook();
                 return;
             }
             
+            // remove old info (old interactable)
+            // add new info (new interactable)
             if (interactable != currentInteractable)
             {
                 currentInteractable.OnExit();
                 currentInteractable = interactable;
+                interactionText.text = currentInteractable.interactText;
                 currentInteractable.OnLook();
             }
         }
-        else
+        else // nothing hit
         {
             if(currentInteractable != null) currentInteractable.OnExit();
             currentInteractable = null;

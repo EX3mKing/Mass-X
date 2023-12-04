@@ -8,7 +8,6 @@ public class IN_Switch : Interactable
     public override void Start()
     {
         base.Start();
-        interactText = "On/Off";
     }
     
     public override void OnLook()

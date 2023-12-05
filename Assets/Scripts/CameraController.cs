@@ -10,7 +10,7 @@ public class CameraController : MonoBehaviour
     
     float xRot = 0f;
     float yRot = 0f;
-    
+
 
     private void Start()
     {
@@ -26,8 +26,7 @@ public class CameraController : MonoBehaviour
         
         xRot -= mouseY;
         yRot += mouseX;
-        xRot = Mathf.Clamp(xRot, -90f, 90f);
-        
+        xRot = Mathf.Clamp(xRot, -90, 90);
         transform.localRotation = Quaternion.Euler(xRot, yRot, 0f);
         
         transform.position = holder.transform.position;

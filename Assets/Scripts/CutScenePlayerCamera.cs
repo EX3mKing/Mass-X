@@ -9,6 +9,11 @@ public class CutScenePlayerCamera : MonoBehaviour
 
     float xRot = 0f;
     float yRot = 0f;
+
+    public float minXRot = -90;
+    public float maxXRot = 90;
+    public float minYRot = -15;
+    public float maxYRot = 15;
     
 
     private void Start()
@@ -25,7 +30,9 @@ public class CutScenePlayerCamera : MonoBehaviour
         
         xRot -= mouseY;
         yRot += mouseX;
-        xRot = Mathf.Clamp(xRot, -90f, 90f);
+        
+        if (maxXRot != 0 || minXRot != 0) xRot = Mathf.Clamp(xRot, minXRot, maxXRot);
+        if (minYRot != 0 || maxYRot != 0) yRot = Mathf.Clamp(yRot, minYRot, maxYRot);
         
         transform.localRotation = Quaternion.Euler(xRot, yRot, 0f);
 

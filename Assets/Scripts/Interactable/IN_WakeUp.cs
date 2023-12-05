@@ -8,11 +8,6 @@ public class IN_WakeUp : Interactable
     [SerializeField] private GameObject mainCamera;
     [SerializeField] private GameObject player;
     [SerializeField] private Canvas uiCanvas;
-    public override void Start()
-    {
-        base.Start();
-        interactText = "Wake Up";
-    }
     
     public override void OnLook()
     {

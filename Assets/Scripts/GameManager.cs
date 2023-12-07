@@ -8,12 +8,13 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-    
+
     private static TextMeshProUGUI interactionText;
     public Interactable currentInteractable;
     public float reach;
     
     public float cameraSeneitivity = 120f;
+
     private void Awake()
     {
         if (Instance != null && Instance != this) 
@@ -28,24 +29,21 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        OnSceneLoaded();
+        ReloadStuff();
     }
 
-    private void OnSceneLoaded()
+    public void ReloadStuff()
     {
         interactionText = GameObject.Find("InteractionText").GetComponent<TextMeshProUGUI>();
         interactionText.text = "";
-        currentInteractable = null;
-    }
-    
-    public void changeInteractionText(string text)
-    {
-        interactionText.text = text;
+        currentInteractable = null;       
     }
 
+    #region  Scene Management
     public void LoadNextScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        ReloadStuff();
     }
     
     public void LoadNextScene(float delay)
@@ -57,8 +55,22 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        ReloadStuff();
     }
 
+    public void Quit()
+    {
+        Debug.Log($"exited");
+        Application.Quit();
+    }
+    
+    #endregion
+    
+    public void changeInteractionText(string text)
+    {
+        interactionText.text = text;
+    }
+    
     public void GetInteractable()
     {
         if (Physics.Raycast(Camera.main.transform.position, 
@@ -66,7 +78,8 @@ public class GameManager : MonoBehaviour
         {
             // not interactable
             // remove info
-            if (!(hit.collider.transform.parent.CompareTag("Interactable") || hit.collider.CompareTag("Interactable")))
+            if (!(hit.collider.transform.parent && hit.collider.transform.parent.CompareTag("Interactable")) 
+                && !hit.collider.CompareTag("Interactable"))
             {
                 print("Obj isn't Interactable");
                 if(currentInteractable != null) currentInteractable.OnExit();
@@ -74,7 +87,7 @@ public class GameManager : MonoBehaviour
                 interactionText.text = "";
                 return;
             }
-            
+
             Interactable interactable = hit.transform.parent.GetComponent<Interactable>();
             if (interactable == null) interactable = hit.transform.GetComponent<Interactable>();
             
@@ -116,7 +129,6 @@ public class GameManager : MonoBehaviour
             interactionText.text = "";
         }
     }
-
     public void Interact()
     {
         if (currentInteractable != null) currentInteractable.Interact();

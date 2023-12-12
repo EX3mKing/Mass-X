@@ -8,7 +8,7 @@ public class IN_Stairs : Interactable
     public GameObject player;
     public GameObject camera;
     public GameObject orientation;
-    
+
     public override void Start()
     {
         

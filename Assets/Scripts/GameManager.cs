@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     private static TextMeshProUGUI interactionText;
     public Interactable currentInteractable;
     public float reach;
+    public string currentItem;
     
     public float cameraSeneitivity = 120f;
 
@@ -88,8 +89,8 @@ public class GameManager : MonoBehaviour
                 return;
             }
 
-            Interactable interactable = hit.transform.parent.GetComponent<Interactable>();
-            if (interactable == null) interactable = hit.transform.GetComponent<Interactable>();
+            Interactable interactable = hit.transform.GetComponent<Interactable>();
+            if (interactable == null) interactable = hit.transform.parent.GetComponent<Interactable>();
             
             // not interactable
             // remove info
@@ -132,5 +133,10 @@ public class GameManager : MonoBehaviour
     public void Interact()
     {
         if (currentInteractable != null) currentInteractable.Interact();
+    }
+    
+    public void ChangeItem(string itemName)
+    {
+        currentItem = itemName;
     }
 }

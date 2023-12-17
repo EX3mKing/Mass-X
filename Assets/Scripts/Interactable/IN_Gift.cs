@@ -20,7 +20,7 @@ public class IN_Gift : Interactable
         GameManager.Instance.ChangeItem("");
         Destroy(itemHolder.GetChild(0).gameObject);
         nextGift.gameObject.SetActive(true);
-        nextItem.pickupable = true;
+        if (nextItem != null) nextItem.pickupable = true;
         Destroy(gameObject);
     }
 }
